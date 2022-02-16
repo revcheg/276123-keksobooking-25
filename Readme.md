@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Max Sharing](https://up.htmlacademy.ru/javascript/25/user/276123).
-* Наставник: `Неизвестно`.
+* Наставник: [Андрей Ефимов](https://htmlacademy.ru/profile/efiand).
 
 ---
 
