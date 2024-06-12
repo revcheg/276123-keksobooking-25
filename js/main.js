@@ -1,4 +1,4 @@
-const getRandomNumber = function(min, max, decimals) {
+const getRandomNumber = (min, max, decimals) => {
   if (min < 0 || max < 0) {
     throw new Error('Диапазон должен быть положительным');
   }
