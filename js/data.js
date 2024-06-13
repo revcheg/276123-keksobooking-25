@@ -1,6 +1,12 @@
 import {getRandomNumber} from './utilities.js';
 
-const ROOM_TYPES = ['palace', 'flat', 'house', 'bungalow'];
+const ROOM_TYPES = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Бунгало'
+};
+
 const CHECK_INS = ['12:00', '13:00', '14:00'];
 const CHECK_OUTS = ['12:00', '13:00', '14:00'];
 const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -18,7 +24,7 @@ const createCard = () => {
       title: 'Добро пожаловать в СМ УТ АТ А',
       address: `${locationX} ${locationY}`,
       price: getRandomNumber(1, 100000),
-      type: ROOM_TYPES[getRandomNumber(0, ROOM_TYPES.length - 1)],
+      type: Object.values(ROOM_TYPES)[getRandomNumber(0, Object.keys(ROOM_TYPES).length - 1)],
       rooms: getRandomNumber(1, 6),
       guests: getRandomNumber(1, 4),
       checkin: CHECK_INS[getRandomNumber(0, CHECK_INS.length - 1)],
@@ -36,3 +42,5 @@ const createCard = () => {
 
 const CARD_COUNT = 10;
 let arrayCards = new Array(CARD_COUNT).fill(null).map(() => createCard());
+
+export {arrayCards};
