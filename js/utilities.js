@@ -30,7 +30,7 @@ const setFeatures = (element, features) => {
     featureList.innerHTML = '';
 
     features.forEach((feature) => {
-      let featureElement = document.createElement('li');
+      const featureElement = document.createElement('li');
       featureElement.classList.add('popup__feature', `popup__feature--${feature}`);
       featureList.appendChild(featureElement);
     });
@@ -46,7 +46,7 @@ const setPhotos = (element, photos) => {
     photoList.innerHTML = '';
 
     photos.forEach((photo) => {
-      let photoElement = document.createElement('img');
+      const photoElement = document.createElement('img');
       photoElement.src = photo;
       photoElement.classList.add('popup__photo');
       photoElement.width = 45;
@@ -58,7 +58,7 @@ const setPhotos = (element, photos) => {
 };
 
 const setAvatar = (element, avatarURL) => {
-  let avatarElement = element.querySelector('.popup__avatar');
+  const avatarElement = element.querySelector('.popup__avatar');
 
   if (avatarURL) {
     avatarElement.src = avatarURL;

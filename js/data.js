@@ -13,8 +13,8 @@ const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'condit
 const PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
 const createCard = () => {
-  let locationX = getRandomNumber(35.65000, 35.70000, 5);
-  let locationY = getRandomNumber(139.70000, 139.80000, 5);
+  const locationX = getRandomNumber(35.65000, 35.70000, 5);
+  const locationY = getRandomNumber(139.70000, 139.80000, 5);
 
   return {
     author: {
@@ -22,7 +22,7 @@ const createCard = () => {
     },
     offer: {
       title: 'Добро пожаловать в СМ УТ АТ А',
-      address: `${locationX} ${locationY}`,
+      address: `${locationX}, ${locationY}`,
       price: getRandomNumber(1, 100000),
       type: Object.values(ROOM_TYPES)[getRandomNumber(0, Object.keys(ROOM_TYPES).length - 1)],
       rooms: getRandomNumber(1, 6),
@@ -41,6 +41,6 @@ const createCard = () => {
 };
 
 const CARD_COUNT = 10;
-let arrayCards = new Array(CARD_COUNT).fill(null).map(() => createCard());
+const cards = new Array(CARD_COUNT).fill(null).map(() => createCard());
 
-export {arrayCards};
+export {cards};
