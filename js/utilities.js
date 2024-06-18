@@ -57,13 +57,15 @@ const setPhotos = (element, photos) => {
   }
 };
 
+const DEFAULT_AVATAR = './img/avatars/default.png';
+
 const setAvatar = (element, avatarURL) => {
   const avatarElement = element.querySelector('.popup__avatar');
 
   if (avatarURL) {
     avatarElement.src = avatarURL;
   } else {
-    avatarElement.classList.add('hidden');
+    avatarElement.src = DEFAULT_AVATAR;
   }
 };
 
