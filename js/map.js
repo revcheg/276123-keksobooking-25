@@ -1,6 +1,8 @@
 // import L from 'leaflet';
 import {cards} from './data.js';
 import {setContent, setFeatures, setPhotos, setAvatar} from './utilities.js';
+import {activateFilter} from './filter.js';
+import {activateForm} from './form.js';
 
 const START_LATITUDE = 35.6804;
 const START_LONGITUDE = 139.7690;
@@ -10,8 +12,14 @@ const PIN_WIDTH = 40;
 
 const map = L.map('map-canvas');
 
+const onMapLoad = () => {
+  activateFilter();
+  activateForm();
+};
+
 const setupMap = () => {
   map
+    .on('load', onMapLoad)
     .setView({
       lat: START_LATITUDE,
       lng: START_LONGITUDE,
