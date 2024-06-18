@@ -1,3 +1,5 @@
+import {START_LATITUDE, START_LONGITUDE} from './map.js';
+
 const advertForm = document.querySelector('.ad-form');
 const avatarFile = advertForm.querySelector('#avatar');
 const titleInput = advertForm.querySelector('#title');
@@ -43,10 +45,12 @@ disableForm();
 
 const activateForm = () => {
   advertForm.classList.remove('ad-form--disabled');
+  addressInput.value = `${START_LATITUDE}, ${START_LONGITUDE}`;
+  addressInput.readOnly = true;
 
   elementsToDisabled.forEach((element) => {
     element.disabled = false;
   });
 };
 
-export {activateForm};
+export {activateForm, addressInput};

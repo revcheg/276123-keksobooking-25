@@ -2,11 +2,11 @@
 import {cards} from './data.js';
 import {setContent, setFeatures, setPhotos, setAvatar} from './utilities.js';
 import {activateFilter} from './filter.js';
-import {activateForm} from './form.js';
+import {activateForm, addressInput} from './form.js';
 
 const START_LATITUDE = 35.6804;
 const START_LONGITUDE = 139.7690;
-const START_ZOOM = 12;
+const START_ZOOM = 11;
 const MAIN_PIN_WIDTH = 52;
 const PIN_WIDTH = 40;
 
@@ -54,9 +54,13 @@ const mainPin = L.marker(
 
 mainPin.addTo(map);
 
-// mainMarker.on('moveend', (evt) => {
-//   console.log(evt.target.getLatLng());
-// });
+const onMoveMainPin = (evt) => {
+  const latLng = evt.target.getLatLng();
+  const formattedLatLng = `${latLng.lat.toFixed(5)}, ${latLng.lng.toFixed(5)}`;
+  addressInput.value = formattedLatLng;
+};
+
+mainPin.on('move', onMoveMainPin);
 
 const createPopup = (offer, author) => {
   const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
@@ -107,3 +111,5 @@ const setupPins = () => {
 };
 
 setupPins();
+
+export {START_LATITUDE, START_LONGITUDE};
