@@ -1,4 +1,4 @@
-const getRandomNumber = (min, max, decimals = 0) => {
+const getRandomNumber = (min = 0, max, decimals = 0) => {
   if (min < 0 || max < 0) {
     throw new Error('Диапазон должен быть положительным');
   }
@@ -7,7 +7,14 @@ const getRandomNumber = (min, max, decimals = 0) => {
     [min, max] = [max, min];
   }
 
-  let randomNumber = Math.random() * (max - min) + min;
+  let randomNumber;
+
+  if (max === min) {
+    randomNumber = parseFloat(max.toFixed(decimals));
+    return randomNumber;
+  }
+
+  randomNumber = Math.random() * (max - min) + min;
   randomNumber = parseFloat(randomNumber.toFixed(decimals));
   return randomNumber;
 };
