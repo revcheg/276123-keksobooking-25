@@ -53,4 +53,30 @@ const activateForm = () => {
   });
 };
 
+const ROOM_PRICES = {
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000
+};
+
+const onChangePrice = (evt) => {
+  const selectedType = evt.target.value;
+  const roomPrice = ROOM_PRICES[selectedType];
+  priceInput.setAttribute('min', roomPrice);
+  priceInput.setAttribute('placeholder', roomPrice);
+};
+
+typeSelect.addEventListener('input', onChangePrice);
+
+const onSyncCheckin = (evt) => {
+  const selectedTime = evt.target.value;
+  checkinSelect.value = selectedTime;
+  checkoutSelect.value = selectedTime;
+};
+
+checkinSelect.addEventListener('input', onSyncCheckin);
+checkoutSelect.addEventListener('input', onSyncCheckin);
+
 export {activateForm, addressInput};

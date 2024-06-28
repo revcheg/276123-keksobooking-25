@@ -1,10 +1,11 @@
 import {getRandomNumber} from './utilities.js';
 
 const ROOM_TYPES = {
-  palace: 'Дворец',
+  bungalow: 'Бунгало',
   flat: 'Квартира',
+  hotel: 'Отель',
   house: 'Дом',
-  bungalow: 'Бунгало'
+  palace: 'Дворец'
 };
 
 const CHECK_INS = ['12:00', '13:00', '14:00'];
