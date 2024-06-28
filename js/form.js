@@ -79,4 +79,64 @@ const onSyncCheckin = (evt) => {
 checkinSelect.addEventListener('input', onSyncCheckin);
 checkoutSelect.addEventListener('input', onSyncCheckin);
 
+const ROOM_CAPACITY = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0']
+};
+
+const onSyncCapacity = () => {
+  const selectedRooms = roomsSelect.value;
+  const allowedCapacities = ROOM_CAPACITY[selectedRooms];
+
+  Array.from(guestsSelect.options).forEach((option) => {
+    option.disabled = !allowedCapacities.includes(option.value);
+  });
+
+  const firstAllowedOption = Array.from(guestsSelect.options).find((option) => !option.disabled);
+  guestsSelect.value = firstAllowedOption.value;
+};
+
+onSyncCapacity();
+
+roomsSelect.addEventListener('input', onSyncCapacity);
+
+const onValidateTitle = () => {
+  const MIN_TITLE_LENGTH = 30;
+  const MAX_TITLE_LENGTH = 100;
+  const valueLength = titleInput.value.length;
+
+  if (valueLength < MIN_TITLE_LENGTH) {
+    titleInput.setCustomValidity(`Ещё ${MIN_TITLE_LENGTH - valueLength} симв.`);
+  } else if (valueLength > MAX_TITLE_LENGTH) {
+    titleInput.setCustomValidity(`Удалите ${MAX_TITLE_LENGTH - valueLength} симв.`);
+  } else {
+    titleInput.setCustomValidity('');
+  }
+
+  titleInput.reportValidity();
+};
+
+titleInput.addEventListener('input', onValidateTitle);
+
+const onValidatePrice = () => {
+  const MIN_PRICE = parseFloat(priceInput.min);
+  const MAX_PRICE = parseFloat(priceInput.max);
+  const valueInput = parseFloat(priceInput.value);
+
+  if (valueInput < MIN_PRICE) {
+    priceInput.setCustomValidity(`Не хватает ещё ${MIN_PRICE - valueInput} денег`);
+  } else if (valueInput > MAX_PRICE) {
+    priceInput.setCustomValidity(`Максимальная цена ${MAX_PRICE} денег`);
+    priceInput.value = MAX_PRICE;
+  } else {
+    priceInput.setCustomValidity('');
+  }
+
+  priceInput.reportValidity();
+};
+
+priceInput.addEventListener('input', onValidatePrice);
+
 export {activateForm, addressInput};
