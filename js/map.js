@@ -1,8 +1,8 @@
 // import L from 'leaflet';
+import {activateForm} from './init.js';
 import {cards} from './data.js';
-import {setContent, setFeatures, setPhotos, setAvatar} from './utilities.js';
-import {activateFilter} from './filter.js';
-import {activateForm, addressInput} from './form.js';
+import {setAvatar, setContent, setFeatures, setPhotos} from './cards.js';
+import {addressInput} from './form.js';
 
 const START_LATITUDE = 35.6804;
 const START_LONGITUDE = 139.7690;
@@ -13,7 +13,6 @@ const PIN_WIDTH = 40;
 const map = L.map('map-canvas');
 
 const onMapLoad = () => {
-  activateFilter();
   activateForm();
 };
 
@@ -32,8 +31,6 @@ const setupMap = () => {
     },
   ).addTo(map);
 };
-
-setupMap();
 
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
@@ -66,6 +63,8 @@ const createPopup = (offer, author) => {
   const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
   const popupElement = popupTemplate.cloneNode(true);
 
+  setAvatar(popupElement, author.avatar);
+
   setContent(popupElement, '.popup__title', offer.title);
   setContent(popupElement, '.popup__text--address', offer.address);
   setContent(popupElement, '.popup__text--price', `${offer.price} ₽/ночь`);
@@ -76,7 +75,6 @@ const createPopup = (offer, author) => {
 
   setFeatures(popupElement, offer.features);
   setPhotos(popupElement, offer.photos);
-  setAvatar(popupElement, author.avatar);
 
   return popupElement;
 };
@@ -112,4 +110,4 @@ const setupPins = () => {
 
 setupPins();
 
-export {START_LATITUDE, START_LONGITUDE};
+export {START_LATITUDE, START_LONGITUDE, setupMap};

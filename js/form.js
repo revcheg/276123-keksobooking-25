@@ -1,57 +1,18 @@
-import {START_LATITUDE, START_LONGITUDE} from './map.js';
+import {filtersToDisabled} from './filter.js';
 
 const advertForm = document.querySelector('.ad-form');
-const avatarFile = advertForm.querySelector('#avatar');
+const formInputs = advertForm.querySelectorAll('input, select, textarea, button');
 const titleInput = advertForm.querySelector('#title');
 const addressInput = advertForm.querySelector('#address');
-const typeSelect = advertForm.querySelector('#type');
 const priceInput = advertForm.querySelector('#price');
+const typeSelect = advertForm.querySelector('#type');
 const checkinSelect = advertForm.querySelector('#timein');
 const checkoutSelect = advertForm.querySelector('#timeout');
 const roomsSelect = advertForm.querySelector('#room_number');
 const guestsSelect = advertForm.querySelector('#capacity');
-const featuresField = advertForm.querySelector('.features');
-const descriptionInput = advertForm.querySelector('#description');
-const photosFile = advertForm.querySelector('#images');
-const formSubmit = advertForm.querySelector('.ad-form__submit');
-const formReset = advertForm.querySelector('.ad-form__reset');
 
-const elementsToDisabled = [
-  avatarFile,
-  titleInput,
-  addressInput,
-  typeSelect,
-  priceInput,
-  checkinSelect,
-  checkoutSelect,
-  roomsSelect,
-  guestsSelect,
-  featuresField,
-  descriptionInput,
-  photosFile,
-  formSubmit,
-  formReset
-];
-
-const disableForm = () => {
-  advertForm.classList.add('ad-form--disabled');
-
-  elementsToDisabled.forEach((element) => {
-    element.disabled = true;
-  });
-};
-
-disableForm();
-
-const activateForm = () => {
-  advertForm.classList.remove('ad-form--disabled');
-  addressInput.value = `${START_LATITUDE}, ${START_LONGITUDE}`;
-  addressInput.readOnly = true;
-
-  elementsToDisabled.forEach((element) => {
-    element.disabled = false;
-  });
-};
+const advertInputs = Array.from(formInputs);
+const inputsToDisabled = advertInputs.concat(filtersToDisabled);
 
 const ROOM_PRICES = {
   bungalow: 0,
@@ -98,45 +59,45 @@ const onSyncCapacity = () => {
   guestsSelect.value = firstAllowedOption.value;
 };
 
-onSyncCapacity();
-
 roomsSelect.addEventListener('input', onSyncCapacity);
 
-const onValidateTitle = () => {
-  const MIN_TITLE_LENGTH = 30;
-  const MAX_TITLE_LENGTH = 100;
-  const valueLength = titleInput.value.length;
+const MIN_TITLE_LENGTH = 30;
+const MAX_TITLE_LENGTH = 100;
 
-  if (valueLength < MIN_TITLE_LENGTH) {
-    titleInput.setCustomValidity(`Ещё ${MIN_TITLE_LENGTH - valueLength} симв.`);
-  } else if (valueLength > MAX_TITLE_LENGTH) {
-    titleInput.setCustomValidity(`Удалите ${MAX_TITLE_LENGTH - valueLength} симв.`);
-  } else {
-    titleInput.setCustomValidity('');
+const onValidateInput = (evt) => {
+  if (evt.target.id === 'title') {
+    const titleLength = titleInput.value.length;
+
+    if (titleLength < MIN_TITLE_LENGTH) {
+      titleInput.setCustomValidity(`Ещё ${MIN_TITLE_LENGTH - titleLength} симв.`);
+    } else if (titleLength > MAX_TITLE_LENGTH) {
+      titleInput.setCustomValidity(`Удалите ${MAX_TITLE_LENGTH - titleLength} симв.`);
+    } else {
+      titleInput.setCustomValidity('');
+    }
+
+    titleInput.reportValidity();
   }
 
-  titleInput.reportValidity();
-};
+  if (evt.target.id === 'price') {
+    const MIN_PRICE = parseFloat(priceInput.min);
+    const MAX_PRICE = parseFloat(priceInput.max);
+    const inputValue = parseFloat(priceInput.value);
 
-titleInput.addEventListener('input', onValidateTitle);
+    if (inputValue < MIN_PRICE) {
+      priceInput.setCustomValidity(`Не хватает ещё ${MIN_PRICE - inputValue} денег`);
+    } else if (inputValue > MAX_PRICE) {
+      priceInput.setCustomValidity(`Максимальная цена ${MAX_PRICE} денег`);
+      priceInput.value = MAX_PRICE;
+    } else {
+      priceInput.setCustomValidity('');
+    }
 
-const onValidatePrice = () => {
-  const MIN_PRICE = parseFloat(priceInput.min);
-  const MAX_PRICE = parseFloat(priceInput.max);
-  const valueInput = parseFloat(priceInput.value);
-
-  if (valueInput < MIN_PRICE) {
-    priceInput.setCustomValidity(`Не хватает ещё ${MIN_PRICE - valueInput} денег`);
-  } else if (valueInput > MAX_PRICE) {
-    priceInput.setCustomValidity(`Максимальная цена ${MAX_PRICE} денег`);
-    priceInput.value = MAX_PRICE;
-  } else {
-    priceInput.setCustomValidity('');
+    priceInput.reportValidity();
   }
-
-  priceInput.reportValidity();
 };
 
-priceInput.addEventListener('input', onValidatePrice);
+titleInput.addEventListener('input', onValidateInput);
+priceInput.addEventListener('input', onValidateInput);
 
-export {activateForm, addressInput};
+export {advertForm, inputsToDisabled, addressInput};
