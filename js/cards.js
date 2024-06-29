@@ -12,6 +12,7 @@ const setAvatar = (element, avatarURL) => {
 
 const setContent = (element, selector, content) => {
   const targetElement = element.querySelector(selector);
+
   if (content) {
     targetElement.textContent = content;
   } else {
@@ -19,14 +20,21 @@ const setContent = (element, selector, content) => {
   }
 };
 
+const ROOM_TYPES = {
+  bungalow: 'Бунгало',
+  flat: 'Квартира',
+  hotel: 'Отель',
+  house: 'Дом',
+  palace: 'Дворец'
+};
+
 const setFeatures = (element, features) => {
   const featureList = element.querySelector('.popup__features');
 
-  if (features.length === 0) {
+  if (!features || features.length === 0) {
     featureList.classList.add('hidden');
   } else {
     featureList.innerHTML = '';
-
     features.forEach((feature) => {
       const featureElement = document.createElement('li');
       featureElement.classList.add('popup__feature', `popup__feature--${feature}`);
@@ -38,11 +46,10 @@ const setFeatures = (element, features) => {
 const setPhotos = (element, photos) => {
   const photoList = element.querySelector('.popup__photos');
 
-  if (photos.length === 0) {
+  if (!photos || photos.length === 0) {
     photoList.classList.add('hidden');
   } else {
     photoList.innerHTML = '';
-
     photos.forEach((photo) => {
       const photoElement = document.createElement('img');
       photoElement.src = photo;
@@ -55,4 +62,4 @@ const setPhotos = (element, photos) => {
   }
 };
 
-export {setAvatar, setContent, setFeatures, setPhotos};
+export {setAvatar, setContent, ROOM_TYPES, setFeatures, setPhotos};

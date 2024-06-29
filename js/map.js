@@ -1,7 +1,7 @@
 // import L from 'leaflet';
 import {activateForm} from './init.js';
-import {cards} from './data.js';
-import {setAvatar, setContent, setFeatures, setPhotos} from './cards.js';
+import {createFetch} from './api.js';
+import {setAvatar, setContent, ROOM_TYPES, setFeatures, setPhotos} from './cards.js';
 import {addressInput} from './form.js';
 
 const START_LATITUDE = 35.6804;
@@ -13,6 +13,7 @@ const PIN_WIDTH = 40;
 const map = L.map('map-canvas');
 
 const onMapLoad = () => {
+  createFetch();
   activateForm();
 };
 
@@ -59,38 +60,38 @@ const onMoveMainPin = (evt) => {
 
 mainPin.on('move', onMoveMainPin);
 
-const createPopup = (offer, author) => {
+const createPopup = (card) => {
   const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
   const popupElement = popupTemplate.cloneNode(true);
 
-  setAvatar(popupElement, author.avatar);
+  setAvatar(popupElement, card.author.avatar);
 
-  setContent(popupElement, '.popup__title', offer.title);
-  setContent(popupElement, '.popup__text--address', offer.address);
-  setContent(popupElement, '.popup__text--price', `${offer.price} ₽/ночь`);
-  setContent(popupElement, '.popup__type', offer.type);
-  setContent(popupElement, '.popup__text--capacity', `${offer.rooms} комнаты для ${offer.guests} гостей`);
-  setContent(popupElement, '.popup__text--time', `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`);
-  setContent(popupElement, '.popup__description', offer.description);
+  setContent(popupElement, '.popup__title', card.offer.title);
+  setContent(popupElement, '.popup__text--address', card.offer.address);
+  setContent(popupElement, '.popup__text--price', `${card.offer.price} ₽/ночь`);
+  setContent(popupElement, '.popup__type', ROOM_TYPES[card.offer.type]);
+  setContent(popupElement, '.popup__text--capacity', `${card.offer.rooms} комнаты для ${card.offer.guests} гостей`);
+  setContent(popupElement, '.popup__text--time', `Заезд после ${card.offer.checkin}, выезд до ${card.offer.checkout}`);
+  setContent(popupElement, '.popup__description', card.offer.description);
 
-  setFeatures(popupElement, offer.features);
-  setPhotos(popupElement, offer.photos);
+  setFeatures(popupElement, card.offer.features);
+  setPhotos(popupElement, card.offer.photos);
 
   return popupElement;
 };
 
-const setupPins = () => {
+const setupPins = (data) => {
   const pinIcon = L.icon({
     iconUrl: 'img/pin.svg',
     iconSize: [PIN_WIDTH, PIN_WIDTH],
     iconAnchor: [PIN_WIDTH / 2, PIN_WIDTH],
   });
 
-  cards.forEach(({location, offer, author}) => {
+  data.forEach((card) => {
     const pin = L.marker(
       {
-        lat: location.x,
-        lng: location.y
+        lat: card.location.lat,
+        lng: card.location.lng
       },
       {
         icon: pinIcon
@@ -100,7 +101,7 @@ const setupPins = () => {
     pin
       .addTo(map)
       .bindPopup(
-        createPopup(offer, author),
+        createPopup(card),
         {
           keepInView: true
         }
@@ -108,6 +109,4 @@ const setupPins = () => {
   });
 };
 
-setupPins();
-
-export {START_LATITUDE, START_LONGITUDE, setupMap};
+export {START_LATITUDE, START_LONGITUDE, setupMap, createPopup, setupPins};
