@@ -19,4 +19,25 @@ const getRandomNumber = (min = 0, max, decimals = 0) => {
   return randomNumber;
 };
 
-export {getRandomNumber};
+const MESSAGE_SHOW_TIME = 5000;
+
+const showMessage = (message) => {
+  const messageTemplate = document.querySelector('#error').content.querySelector('.error');
+  const messageElement = messageTemplate.cloneNode(true);
+  const messageText = messageElement.querySelector('.error__message');
+  const messageButton = messageElement.querySelector('.error__button');
+
+  messageText.textContent = message;
+  messageButton.textContent = 'Закрыть';
+  messageButton.addEventListener('click', () => {
+    messageElement.remove();
+  });
+
+  document.body.append(messageElement);
+
+  setTimeout(() => {
+    messageElement.remove();
+  }, MESSAGE_SHOW_TIME);
+};
+
+export {getRandomNumber, showMessage};

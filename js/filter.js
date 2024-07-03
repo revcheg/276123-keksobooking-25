@@ -3,4 +3,12 @@ const filterInputs = filterForm.querySelectorAll('input, select');
 
 const filtersToDisabled = Array.from(filterInputs);
 
-export {filterForm, filtersToDisabled};
+const activateFilter = (inputs) => {
+  filterForm.classList.remove('ad-form--disabled');
+
+  inputs.forEach((element) => {
+    element.disabled = false;
+  });
+};
+
+export {filterForm, filtersToDisabled, activateFilter};

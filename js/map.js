@@ -1,6 +1,6 @@
 // import L from 'leaflet';
 import {activateForm} from './init.js';
-import {createFetch} from './api.js';
+import {fetchCards} from './data.js';
 import {setAvatar, setContent, ROOM_TYPES, setFeatures, setPhotos} from './cards.js';
 import {addressInput} from './form.js';
 
@@ -13,7 +13,7 @@ const PIN_WIDTH = 40;
 const map = L.map('map-canvas');
 
 const onMapLoad = () => {
-  createFetch();
+  fetchCards();
   activateForm();
 };
 

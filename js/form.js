@@ -100,4 +100,4 @@ const onValidateInput = (evt) => {
 titleInput.addEventListener('input', onValidateInput);
 priceInput.addEventListener('input', onValidateInput);
 
-export {advertForm, inputsToDisabled, addressInput};
+export {advertForm, advertInputs, inputsToDisabled, addressInput};
