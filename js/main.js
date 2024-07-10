@@ -6,6 +6,7 @@ import './cards.js';
 import './map.js';
 import './filter.js';
 import './form.js';
+import './popup.js';
 
 import {disableForm} from './init.js';
 import {setupMap} from './map.js';

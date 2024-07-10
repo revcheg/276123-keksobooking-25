@@ -1,4 +1,5 @@
 import {postData} from './api.js';
+import {resetMainPin} from './map.js';
 import {filtersToDisabled} from './filter.js';
 
 const advertForm = document.querySelector('.ad-form');
@@ -11,6 +12,8 @@ const checkinSelect = advertForm.querySelector('#timein');
 const checkoutSelect = advertForm.querySelector('#timeout');
 const roomsSelect = advertForm.querySelector('#room_number');
 const guestsSelect = advertForm.querySelector('#capacity');
+// const sumbitButton = advertForm.querySelector('.ad-form__submit');
+const resetButton = advertForm.querySelector('.ad-form__reset');
 
 const advertInputs = Array.from(formInputs);
 const inputsToDisabled = advertInputs.concat(filtersToDisabled);
@@ -101,16 +104,26 @@ const onValidateInput = (evt) => {
 titleInput.addEventListener('input', onValidateInput);
 priceInput.addEventListener('input', onValidateInput);
 
+const resetForm = () => {
+  advertForm.reset();
+  resetMainPin();
+};
+
 const onFormSubmit = (evt) => {
   evt.preventDefault();
 
   const formData = new FormData(evt.target);
-
   postData(formData);
 
-  advertForm.reset();
+  resetForm();
+};
+
+const onResetAddress = (evt) => {
+  evt.preventDefault();
+  resetMainPin();
 };
 
 advertForm.addEventListener('submit', onFormSubmit);
+resetButton.addEventListener('click', onResetAddress);
 
 export {advertForm, advertInputs, inputsToDisabled, addressInput};

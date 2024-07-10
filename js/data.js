@@ -1,4 +1,3 @@
-// import {showMessage} from './utilities.js';
 import {getData} from './api.js';
 import {setupPins} from './map.js';
 import {filtersToDisabled, activateFilter} from './filter.js';

@@ -4,8 +4,8 @@ import {getOffers} from './data.js';
 import {setAvatar, setContent, ROOM_TYPES, setFeatures, setPhotos} from './cards.js';
 import {addressInput} from './form.js';
 
-const START_LATITUDE = 35.6804;
-const START_LONGITUDE = 139.7690;
+const START_LATITUDE = 35.68040;
+const START_LONGITUDE = 139.76900;
 const START_ZOOM = 11;
 const MAIN_PIN_WIDTH = 52;
 const PIN_WIDTH = 40;
@@ -51,6 +51,10 @@ const mainPin = L.marker(
 );
 
 mainPin.addTo(map);
+
+const resetMainPin = () => {
+  mainPin.setLatLng([START_LATITUDE, START_LONGITUDE]);
+};
 
 const onMoveMainPin = (evt) => {
   const latLng = evt.target.getLatLng();
@@ -109,4 +113,4 @@ const setupPins = (data) => {
   });
 };
 
-export {START_LATITUDE, START_LONGITUDE, setupMap, createPopup, setupPins};
+export {START_LATITUDE, START_LONGITUDE, setupMap, resetMainPin, createPopup, setupPins};

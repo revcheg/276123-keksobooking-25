@@ -1,11 +1,11 @@
-import {showMessage} from './utilities.js';
+import {createPopup, popupMode} from './popup.js';
 
 const handleFetchError = () => {
-  showMessage('Не удалось загрузить похожие объявления');
+  createPopup(popupMode.ERROR_FETCH);
 };
 
 const handlePostError = () => {
-  showMessage('Не удалось отправить форму');
+  createPopup(popupMode.ERROR_POST);
 };
 
 const getData = (handleSuccess) => () => {
@@ -30,7 +30,7 @@ const postData = (body) => {
   })
     .then((response) => {
       if (response.ok) {
-        showMessage('Объявление размещено');
+        createPopup(popupMode.SUCCESS_POST);
       } else {
         handlePostError();
       }
