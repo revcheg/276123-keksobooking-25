@@ -1,3 +1,4 @@
+import {postData} from './api.js';
 import {filtersToDisabled} from './filter.js';
 
 const advertForm = document.querySelector('.ad-form');
@@ -99,5 +100,17 @@ const onValidateInput = (evt) => {
 
 titleInput.addEventListener('input', onValidateInput);
 priceInput.addEventListener('input', onValidateInput);
+
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+
+  const formData = new FormData(evt.target);
+
+  postData(formData);
+
+  advertForm.reset();
+};
+
+advertForm.addEventListener('submit', onFormSubmit);
 
 export {advertForm, advertInputs, inputsToDisabled, addressInput};
