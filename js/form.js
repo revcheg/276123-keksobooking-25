@@ -12,7 +12,7 @@ const checkinSelect = offerForm.querySelector('#timein');
 const checkoutSelect = offerForm.querySelector('#timeout');
 const roomsSelect = offerForm.querySelector('#room_number');
 const guestsSelect = offerForm.querySelector('#capacity');
-const submitButton = offerForm.querySelector('.ad-form__submit');
+// const submitButton = offerForm.querySelector('.ad-form__submit');
 const resetButton = offerForm.querySelector('.ad-form__reset');
 
 const advertInputs = Array.from(formInputs);
@@ -26,23 +26,23 @@ const ROOM_PRICES = {
   palace: 10000
 };
 
-const onChangePrice = (evt) => {
+const syncPrice = (evt) => {
   const selectedType = evt.target.value;
   const roomPrice = ROOM_PRICES[selectedType];
   priceInput.setAttribute('min', roomPrice);
   priceInput.setAttribute('placeholder', roomPrice);
 };
 
-typeSelect.addEventListener('input', onChangePrice);
+typeSelect.addEventListener('input', syncPrice);
 
-const onSyncCheckin = (evt) => {
+const syncCheckin = (evt) => {
   const selectedTime = evt.target.value;
   checkinSelect.value = selectedTime;
   checkoutSelect.value = selectedTime;
 };
 
-checkinSelect.addEventListener('input', onSyncCheckin);
-checkoutSelect.addEventListener('input', onSyncCheckin);
+checkinSelect.addEventListener('input', syncCheckin);
+checkoutSelect.addEventListener('input', syncCheckin);
 
 const ROOM_CAPACITY = {
   '1': ['1'],
@@ -51,7 +51,7 @@ const ROOM_CAPACITY = {
   '100': ['0']
 };
 
-const onSyncCapacity = () => {
+const syncCapacity = () => {
   const selectedRooms = roomsSelect.value;
   const allowedCapacities = ROOM_CAPACITY[selectedRooms];
 
@@ -63,7 +63,7 @@ const onSyncCapacity = () => {
   guestsSelect.value = firstAllowedOption.value;
 };
 
-roomsSelect.addEventListener('input', onSyncCapacity);
+roomsSelect.addEventListener('input', syncCapacity);
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -120,7 +120,7 @@ const resetForm = () => {
   resetMainPin();
 };
 
-const onFormSubmit = (evt) => {
+const submitForm = (evt) => {
   evt.preventDefault();
 
   if (validateForm()) {
@@ -130,13 +130,12 @@ const onFormSubmit = (evt) => {
   }
 };
 
-const onResetAddress = (evt) => {
+const resetAddress = (evt) => {
   evt.preventDefault();
   resetMainPin();
 };
 
-offerForm.addEventListener('submit', onFormSubmit);
-submitButton.addEventListener('click', validateForm);
-resetButton.addEventListener('click', onResetAddress);
+offerForm.addEventListener('submit', submitForm);
+resetButton.addEventListener('click', resetAddress);
 
 export {offerForm, advertInputs, inputsToDisabled, addressInput};
