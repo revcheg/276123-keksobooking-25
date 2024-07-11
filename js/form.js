@@ -1,6 +1,6 @@
-import {postData} from './api.js';
-import {resetMainPin} from './map.js';
-import {filtersToDisabled} from './filter.js';
+import { postData } from './api.js';
+import { resetMainPin } from './map.js';
+import { filtersToDisabled } from './filter.js';
 
 const offerForm = document.querySelector('.ad-form');
 const formInputs = offerForm.querySelectorAll('input, select, textarea, button');
@@ -12,7 +12,7 @@ const checkinSelect = offerForm.querySelector('#timein');
 const checkoutSelect = offerForm.querySelector('#timeout');
 const roomsSelect = offerForm.querySelector('#room_number');
 const guestsSelect = offerForm.querySelector('#capacity');
-// const submitButton = offerForm.querySelector('.ad-form__submit');
+const submitButton = offerForm.querySelector('.ad-form__submit');
 const resetButton = offerForm.querySelector('.ad-form__reset');
 
 const advertInputs = Array.from(formInputs);
@@ -107,35 +107,41 @@ const validatePrice = () => {
 
 priceInput.addEventListener('input', validatePrice);
 
+const clearForm = () => {
+  offerForm.reset();
+  resetMainPin();
+};
+
+const clearAddress = (evt) => {
+  evt.preventDefault();
+  resetMainPin();
+};
+
 const validateForm = () => {
   for (const element of formInputs) {
     if (!element.checkValidity()) {
       element.style.boxShadow = '0 0 2px 2px #ED330F';
+    } else {
+      element.style.boxShadow = 'none';
     }
   }
-};
-
-const resetForm = () => {
-  offerForm.reset();
-  resetMainPin();
 };
 
 const submitForm = (evt) => {
   evt.preventDefault();
 
-  if (validateForm()) {
-    const formData = new FormData(evt.target);
-    postData(formData);
-    resetForm();
+  if (!offerForm.checkValidity()) {
+    validateForm();
+    return;
   }
-};
 
-const resetAddress = (evt) => {
-  evt.preventDefault();
-  resetMainPin();
+  const formData = new FormData(evt.target);
+  postData(formData);
+  clearForm();
 };
 
 offerForm.addEventListener('submit', submitForm);
-resetButton.addEventListener('click', resetAddress);
+submitButton.addEventListener('click', validateForm);
+resetButton.addEventListener('click', clearAddress);
 
-export {offerForm, advertInputs, inputsToDisabled, addressInput};
+export { offerForm, advertInputs, inputsToDisabled, addressInput };
