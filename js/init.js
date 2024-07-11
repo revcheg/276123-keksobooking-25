@@ -1,10 +1,10 @@
 import {START_LATITUDE, START_LONGITUDE} from './map.js';
 import {filterForm} from './filter.js';
-import {advertForm, advertInputs, addressInput} from './form.js';
+import {offerForm, advertInputs, addressInput} from './form.js';
 
 const disableForm = (inputs) => {
   filterForm.classList.add('ad-form--disabled');
-  advertForm.classList.add('ad-form--disabled');
+  offerForm.classList.add('ad-form--disabled');
 
   inputs.forEach((element) => {
     element.disabled = true;
@@ -12,7 +12,7 @@ const disableForm = (inputs) => {
 };
 
 const activateForm = () => {
-  advertForm.classList.remove('ad-form--disabled');
+  offerForm.classList.remove('ad-form--disabled');
 
   addressInput.value = `${START_LATITUDE}, ${START_LONGITUDE}`;
   addressInput.readOnly = true;

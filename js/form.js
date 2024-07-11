@@ -2,18 +2,18 @@ import {postData} from './api.js';
 import {resetMainPin} from './map.js';
 import {filtersToDisabled} from './filter.js';
 
-const advertForm = document.querySelector('.ad-form');
-const formInputs = advertForm.querySelectorAll('input, select, textarea, button');
-const titleInput = advertForm.querySelector('#title');
-const addressInput = advertForm.querySelector('#address');
-const priceInput = advertForm.querySelector('#price');
-const typeSelect = advertForm.querySelector('#type');
-const checkinSelect = advertForm.querySelector('#timein');
-const checkoutSelect = advertForm.querySelector('#timeout');
-const roomsSelect = advertForm.querySelector('#room_number');
-const guestsSelect = advertForm.querySelector('#capacity');
-// const sumbitButton = advertForm.querySelector('.ad-form__submit');
-const resetButton = advertForm.querySelector('.ad-form__reset');
+const offerForm = document.querySelector('.ad-form');
+const formInputs = offerForm.querySelectorAll('input, select, textarea, button');
+const titleInput = offerForm.querySelector('#title');
+const addressInput = offerForm.querySelector('#address');
+const priceInput = offerForm.querySelector('#price');
+const typeSelect = offerForm.querySelector('#type');
+const checkinSelect = offerForm.querySelector('#timein');
+const checkoutSelect = offerForm.querySelector('#timeout');
+const roomsSelect = offerForm.querySelector('#room_number');
+const guestsSelect = offerForm.querySelector('#capacity');
+const submitButton = offerForm.querySelector('.ad-form__submit');
+const resetButton = offerForm.querySelector('.ad-form__reset');
 
 const advertInputs = Array.from(formInputs);
 const inputsToDisabled = advertInputs.concat(filtersToDisabled);
@@ -68,54 +68,66 @@ roomsSelect.addEventListener('input', onSyncCapacity);
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 
-const onValidateInput = (evt) => {
-  if (evt.target.id === 'title') {
-    const titleLength = titleInput.value.length;
+const validateTitle = () => {
+  const titleLength = titleInput.value.length;
 
-    if (titleLength < MIN_TITLE_LENGTH) {
-      titleInput.setCustomValidity(`Ещё ${MIN_TITLE_LENGTH - titleLength} симв.`);
-    } else if (titleLength > MAX_TITLE_LENGTH) {
-      titleInput.setCustomValidity(`Удалите ${MAX_TITLE_LENGTH - titleLength} симв.`);
-    } else {
-      titleInput.setCustomValidity('');
-    }
-
-    titleInput.reportValidity();
+  if (titleLength < MIN_TITLE_LENGTH) {
+    titleInput.setCustomValidity(`Ещё ${MIN_TITLE_LENGTH - titleLength} симв.`);
+  } else if (titleLength > MAX_TITLE_LENGTH) {
+    titleInput.setCustomValidity(`Удалите ${MAX_TITLE_LENGTH - titleLength} симв.`);
+  } else if (titleInput.checkValidity()) {
+    titleInput.style.boxShadow = 'none';
+  } else {
+    titleInput.setCustomValidity('');
   }
 
-  if (evt.target.id === 'price') {
-    const MIN_PRICE = parseFloat(priceInput.min);
-    const MAX_PRICE = parseFloat(priceInput.max);
-    const inputValue = parseFloat(priceInput.value);
+  titleInput.reportValidity();
+};
 
-    if (inputValue < MIN_PRICE) {
-      priceInput.setCustomValidity(`Не хватает ещё ${MIN_PRICE - inputValue} денег`);
-    } else if (inputValue > MAX_PRICE) {
-      priceInput.setCustomValidity(`Максимальная цена ${MAX_PRICE} денег`);
-      priceInput.value = MAX_PRICE;
-    } else {
-      priceInput.setCustomValidity('');
+titleInput.addEventListener('input', validateTitle);
+
+const validatePrice = () => {
+  const MIN_PRICE = parseFloat(priceInput.min);
+  const MAX_PRICE = parseFloat(priceInput.max);
+  const inputValue = parseFloat(priceInput.value);
+
+  if (inputValue < MIN_PRICE) {
+    priceInput.setCustomValidity(`Не хватает ещё ${MIN_PRICE - inputValue} денег`);
+  } else if (inputValue > MAX_PRICE) {
+    priceInput.setCustomValidity(`Максимальная цена ${MAX_PRICE} денег`);
+    priceInput.value = MAX_PRICE;
+  } else if (priceInput.checkValidity()) {
+    priceInput.style.boxShadow = 'none';
+  } else {
+    priceInput.setCustomValidity('');
+  }
+
+  priceInput.reportValidity();
+};
+
+priceInput.addEventListener('input', validatePrice);
+
+const validateForm = () => {
+  for (const element of formInputs) {
+    if (!element.checkValidity()) {
+      element.style.boxShadow = '0 0 2px 2px #ED330F';
     }
-
-    priceInput.reportValidity();
   }
 };
 
-titleInput.addEventListener('input', onValidateInput);
-priceInput.addEventListener('input', onValidateInput);
-
 const resetForm = () => {
-  advertForm.reset();
+  offerForm.reset();
   resetMainPin();
 };
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();
 
-  const formData = new FormData(evt.target);
-  postData(formData);
-
-  resetForm();
+  if (validateForm()) {
+    const formData = new FormData(evt.target);
+    postData(formData);
+    resetForm();
+  }
 };
 
 const onResetAddress = (evt) => {
@@ -123,7 +135,8 @@ const onResetAddress = (evt) => {
   resetMainPin();
 };
 
-advertForm.addEventListener('submit', onFormSubmit);
+offerForm.addEventListener('submit', onFormSubmit);
+submitButton.addEventListener('click', validateForm);
 resetButton.addEventListener('click', onResetAddress);
 
-export {advertForm, advertInputs, inputsToDisabled, addressInput};
+export {offerForm, advertInputs, inputsToDisabled, addressInput};

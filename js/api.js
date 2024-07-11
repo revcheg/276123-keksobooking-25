@@ -26,7 +26,7 @@ const getData = (handleSuccess) => () => {
 const postData = (body) => {
   fetch('https://26.javascript.htmlacademy.pro/keksobooking', {
     method: 'POST',
-    body
+    body: body
   })
     .then((response) => {
       if (response.ok) {

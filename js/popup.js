@@ -21,9 +21,11 @@ const createPopup = (mode) => {
   document.body.append(popupElement);
 
   const popupButton = popupElement.querySelector('button');
-  popupButton.addEventListener('click', () => {
-    popupElement.remove();
-  });
+  if (popupButton) {
+    popupButton.addEventListener('click', () => {
+      popupElement.remove();
+    });
+  }
 
   setTimeout(() => {
     popupElement.remove();
