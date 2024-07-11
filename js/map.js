@@ -84,7 +84,11 @@ const createPopup = (card) => {
   return popupElement;
 };
 
+const pinsLayer = L.layerGroup().addTo(map);
+
 const setupPins = (data) => {
+  pinsLayer.clearLayers();
+
   const pinIcon = L.icon({
     iconUrl: 'img/pin.svg',
     iconSize: [PIN_WIDTH, PIN_WIDTH],
@@ -110,6 +114,8 @@ const setupPins = (data) => {
           keepInView: true
         }
       );
+
+    pinsLayer.addLayer(pin);
   });
 };
 
