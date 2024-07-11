@@ -11,4 +11,4 @@ const activateFilter = (inputs) => {
   });
 };
 
-export {filterForm, filtersToDisabled, activateFilter};
+export { filterForm, filtersToDisabled, activateFilter };

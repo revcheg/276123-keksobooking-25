@@ -1,6 +1,6 @@
 import { postData } from './api.js';
 import { resetMainPin } from './map.js';
-import { filtersToDisabled } from './filter.js';
+import { filtersToDisabled } from './filters.js';
 
 const offerForm = document.querySelector('.ad-form');
 const formInputs = offerForm.querySelectorAll('input, select, textarea, button');

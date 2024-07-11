@@ -1,4 +1,4 @@
-import {createPopup, popupMode} from './popup.js';
+import { createPopup, popupMode } from './popup.js';
 
 const handleFetchError = () => {
   createPopup(popupMode.ERROR_FETCH);
@@ -38,4 +38,4 @@ const postData = (body) => {
     .catch(handlePostError);
 };
 
-export {getData, postData};
+export { getData, postData };

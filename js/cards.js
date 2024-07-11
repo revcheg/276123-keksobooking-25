@@ -62,4 +62,4 @@ const setPhotos = (element, photos) => {
   }
 };
 
-export {setAvatar, setContent, ROOM_TYPES, setFeatures, setPhotos};
+export { setAvatar, setContent, ROOM_TYPES, setFeatures, setPhotos };

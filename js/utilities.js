@@ -19,4 +19,4 @@ const getRandomNumber = (min = 0, max, decimals = 0) => {
   return randomNumber;
 };
 
-export {getRandomNumber};
+export { getRandomNumber };

@@ -1,6 +1,6 @@
-import {START_LATITUDE, START_LONGITUDE} from './map.js';
-import {filterForm} from './filter.js';
-import {offerForm, advertInputs, addressInput} from './form.js';
+import { START_LATITUDE, START_LONGITUDE } from './map.js';
+import { filterForm } from './filters.js';
+import { offerForm, advertInputs, addressInput } from './form.js';
 
 const disableForm = (inputs) => {
   filterForm.classList.add('ad-form--disabled');
@@ -22,4 +22,4 @@ const activateForm = () => {
   });
 };
 
-export {disableForm, activateForm};
+export { disableForm, activateForm };

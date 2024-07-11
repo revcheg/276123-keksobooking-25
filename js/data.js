@@ -1,15 +1,15 @@
-import {getData} from './api.js';
-import {setupPins} from './map.js';
-import {filtersToDisabled, activateFilter} from './filter.js';
+import { getData } from './api.js';
+import { setupPins } from './map.js';
+import { filtersToDisabled, activateFilter } from './filters.js';
 
-let arrayCards = [];
-const MAX_CARD_COUNT = 10;
+let offersArray = [];
+const MAX_OFFERS_COUNT = 10;
 
 const getOffers = getData(
   (data) => {
-    arrayCards = data.slice(0, MAX_CARD_COUNT);
-    setupPins(arrayCards);
+    offersArray = data.slice(0, MAX_OFFERS_COUNT);
+    setupPins(offersArray);
     activateFilter(filtersToDisabled);
   });
 
-export {getOffers};
+export { getOffers };

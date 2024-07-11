@@ -32,4 +32,4 @@ const createPopup = (mode) => {
   }, POPUP_SHOW_TIME);
 };
 
-export {createPopup, popupMode};
+export { createPopup, popupMode };

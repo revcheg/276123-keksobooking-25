@@ -1,8 +1,8 @@
 // import L from 'leaflet';
-import {activateForm} from './init.js';
-import {getOffers} from './data.js';
-import {setAvatar, setContent, ROOM_TYPES, setFeatures, setPhotos} from './cards.js';
-import {addressInput} from './form.js';
+import { activateForm } from './init.js';
+import { getOffers } from './data.js';
+import { setAvatar, setContent, ROOM_TYPES, setFeatures, setPhotos } from './cards.js';
+import { addressInput } from './form.js';
 
 const START_LATITUDE = 35.68040;
 const START_LONGITUDE = 139.76900;
@@ -113,4 +113,4 @@ const setupPins = (data) => {
   });
 };
 
-export {START_LATITUDE, START_LONGITUDE, setupMap, resetMainPin, createPopup, setupPins};
+export { START_LATITUDE, START_LONGITUDE, setupMap, resetMainPin, createPopup, setupPins };
